@@ -1,0 +1,4 @@
+#ifndef TEE_API_EXTENSIONS_H
+#define TEE_API_EXTENSIONS_H
+
+#endif /* TEE_API_EXTENSIONS_H */
