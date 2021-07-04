@@ -42,8 +42,6 @@
 <!-- ABOUT THE PROJECT -->
 ## About
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
-
 Security is becoming paramount for IoT end-to-end solution designs. One well-established strategy to provide increased integrity and confidentiality for applications, from the edge to the cloud, is to rely on Trusted Execution Environments (TEE). One of the most common TEE design approaches is to create a virtual secure processor in the main application processor by leveraging specific security-oriented hardware extensions. Another approach that has also been taken by industry to provide a TEE is to use dedicated external secure elements. However, both of these approaches yield different weaknesses.
 
 In this project, we introduce a novel TEE design aiming at disrupting the way TEEs are currently being built and deployed. We propose a newly refined TEE approach, named Trusted Execution Environments On-Demand (TEEOD), which leverages reconfigurable FPGA technology to provide additional security guarantees for security-critical applications. TEEOD approach implements secure enclaves in the programmable logic (PL) by instantiating a customized and dedicated security processor per application on a per-need basis.
