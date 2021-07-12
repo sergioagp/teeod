@@ -51,92 +51,24 @@ In this project, we introduce a novel TEE design aiming at disrupting the way TE
 * [PetaLinux 2020.1](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-design-tools.html)
 * [Cortex-M1](https://developer.arm.com/ip-products/designstart/fpga)
 
-## Description of archive
-
-    ```
-  ├── apps
-│   └── bitcoin-wallet			#folder that contains both the client application and the trusted application
-│       ├── Android.mk
-│       ├── CMakeLists.txt
-│       ├── host			#folder that contains the client application
-│       │   ├── include
-│       │   │   ├── main.h
-│       │   │   └── tx.h
-│       │   ├── main
-│       │   ├── main.c
-│       │   ├── Makefile
-│       │   ├── tx.c
-│       │   └── wallet
-│       ├── Makefile
-│       └── ta				#folder that contains the trusted application
-│           ├── bitcoin_wallet_ta.c
-│           ├── bitcoin_wallet_ta.o
-│           ├── include
-│           │   └── bitcoin_wallet_ta.h
-│           ├── Makefile
-│           ├── sub.mk
-│           └── user_ta_header_defines.h
-├── client-lib				#folder that contains the TEE Client API
-│   ├── contiguousMalloc.c
-│   ├── include
-│   │   ├── cma_malloc.h
-│   │   ├── contiguousMalloc.h
-│   │   ├── load_ta.h
-│   │   ├── tee_client_api.h
-│   │   ├── tee_defines.h
-│   │   └── tee.h
-│   ├── load_ta.c
-│   ├── Makefile			# to generate the libteeodc.a
-│   └── tee_client_api.c
-├── hw					#folder that contains the hardware design
-│   ├── ip_repo
-│   │   ├── Arm_ipi_repository
-│   │   ├── Arm_sw_repository
-│   │   │   └── CortexM
-│   │   ├── BRAM_loader_1.0
-│   │   ├── security_monitor_1.0
-│   │   └── tee_communication_agent_1.0
-│   ├── project_teeod.tcl
-│   ├── src
-│   │   └── Ultra96_V2_constraints_190430.xdc
-│   └── vivado_project
-└── ta-api				#folder that contains the TEE Internal Core API
-    ├── arch
-    │   ├── cortex-m1
-    │   │   ├── core_cm1.h
-    │   │   └── linker.ld
-    │   ├── newlib.c
-    │   └── platform.h
-    ├── entry.S
-    ├── libutee
-    │   ├── include
-    │   │   ├── tee_api_defines.h
-    │   │   ├── tee_api.h
-    │   │   ├── tee_api_types.h
-    │   │   ├── tee_internal_api_extensions.h
-    │   │   ├── tee_internal_api.h
-    │   │   └── tee_ta_api.h
-    │   ├── tee_api.c
-    │   ├── tee_api_objects.c
-    │   └── tee_api_operations.c
-    ├── Makefile
-    ├── mk
-    │   └── ta_dev_kit.mk		# called by the trusted application to generate the TA binary
-    ├── tee.c
-    ├── tee_isr.h
-    ├── tee_isr.o
-    ├── tee_isr.S
-    └── tools
-        └── bintocoe.py
-
-    ```
-
 <!-- GETTING STARTED -->
 ## Getting Started
 
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
-
+1. First open Vivado and select  `Tools -> Run Tcl Script...` and selecting the `<project_dir>/hw/project_teeod.tcl`
+2. Generate bitstream.
+3. Using the generated bitstream, build petalinux following this [Guide](https://www.96boards.org/documentation/consumer/ultra96/ultra96-v1/build/peta-linux.md.html).
+4. After succesfully build linux, it's time to generate the host and the TA applications. First, genereate the teeodc libray, by running the Makefile in client-api folder.
+5. Run the Makefile that is inside the folder apps/bitcoin-wallet you should obtain an bitcoin_wallet.elf (client application) and an TA.bin.
+6. Copy the wallet and the TA.bin to any folder in choose inside the petalinux running on the Ultra96v2
+7. Run the follow commands:
+  ```sh
+  ./wallet 1 1234                 #check if there is a master key run
+  ./wallet 2 1234                 #generate a new master key
+  ./wallet 3 1234 -a <mnemonic>   #generate a new master key from a mnemonic
+  ./wallet 4 1234                 #erase the generated master key
+  ./wallet 5 1234 -a <account_id> #sign a transaction
+  ./wallet 6 1234                 #get the bitcoin address
+  ```
 <!--### Prerequisites
 
 This is an example of how to list things you need to use the software and how to install them.
@@ -145,7 +77,7 @@ This is an example of how to list things you need to use the software and how to
   npm install npm@latest -g
   ```
 -->
-
+<!--
 ### Installation
 
 1. Get a free API Key at [https://example.com](https://example.com)
@@ -161,7 +93,7 @@ This is an example of how to list things you need to use the software and how to
    ```JS
    const API_KEY = 'ENTER YOUR API';
    ```
-
+-->
 
 
 <!-- USAGE EXAMPLES -->
@@ -176,7 +108,7 @@ _For more examples, please refer to the [Documentation](https://github.com/sergi
 <!-- ROADMAP -->
 ## Roadmap
 
-See the [open issues](https://github.com/othneildrew/Best-README-Template/issues) for a list of proposed features (and known issues).
+See the [open issues](https://github.com/sergioagp/teeod/issues) for a list of proposed features (and known issues).
 
 <!-- CONTACT -->
 ## Contact
