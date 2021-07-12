@@ -121,13 +121,6 @@ set_property "ip_repo_paths" "[file normalize "$origin_dir/ip_repo/tee_comm_1.0"
 # Rebuild user ip_repo's index before adding any source files
 update_ip_catalog -rebuild
 
-# Set 'sources_1' fileset object
-set obj [get_filesets sources_1]
-set files [list \
- [file normalize "${origin_dir}/src/bram_a7.coe"] \
-]
-add_files -norecurse -fileset $obj $files
-
 # Set 'sources_1' fileset file properties for remote files
 # None
 
@@ -162,13 +155,6 @@ set obj [get_filesets constrs_1]
 if {[string equal [get_filesets -quiet sim_1] ""]} {
   create_fileset -simset sim_1
 }
-
-# Set 'sim_1' fileset object
-set obj [get_filesets sim_1]
-set files [list \
- [file normalize "${origin_dir}/src/testbench/bv_cm1.v"] \
-]
-add_files -norecurse -fileset $obj $files
 
 # Set 'sim_1' fileset file properties for remote files
 # None
