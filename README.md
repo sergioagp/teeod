@@ -1,11 +1,11 @@
   <h1 align="center">TEEOD</h1>
   <p align="center">Trusted Execution Environments On-Demand via Reconfigurable FPGA
     <br />
-    <a href="https://github.com/othneildrew/Best-README-Template">View Demo</a>
+    <a href="https://youtu.be/ArsOXOTzKNM">View Demo</a>
     ·
-    <a href="https://github.com/othneildrew/Best-README-Template/issues">Report Bug</a>
+    <a href="https://github.com/sergioagp/teeod/issues">Report Bug</a>
     ·
-    <a href="https://github.com/othneildrew/Best-README-Template/issues">Request Feature</a>
+    <a href="https://github.com/sergioagp/teeod/issues">Request Feature</a>
   </p>
 </p>
 
@@ -47,13 +47,89 @@ Security is becoming paramount for IoT end-to-end solution designs. One well-est
 In this project, we introduce a novel TEE design aiming at disrupting the way TEEs are currently being built and deployed. We propose a newly refined TEE approach, named Trusted Execution Environments On-Demand (TEEOD), which leverages reconfigurable FPGA technology to provide additional security guarantees for security-critical applications. TEEOD approach implements secure enclaves in the programmable logic (PL) by instantiating a customized and dedicated security processor per application on a per-need basis.
 
 ### Built With
+* [Vivado 2020.1](https://www.xilinx.com/support/download.html)
+* [PetaLinux 2020.1](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-design-tools.html)
+* [Cortex-M1](https://developer.arm.com/ip-products/designstart/fpga)
 
-This section should list any major frameworks that you built your project using. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
-* [Bootstrap](https://getbootstrap.com)
-* [JQuery](https://jquery.com)
-* [Laravel](https://laravel.com)
+## Description of archive
 
+    ```
+  ├── apps
+│   └── bitcoin-wallet			#folder that contains both the client application and the trusted application
+│       ├── Android.mk
+│       ├── CMakeLists.txt
+│       ├── host			#folder that contains the client application
+│       │   ├── include
+│       │   │   ├── main.h
+│       │   │   └── tx.h
+│       │   ├── main
+│       │   ├── main.c
+│       │   ├── Makefile
+│       │   ├── tx.c
+│       │   └── wallet
+│       ├── Makefile
+│       └── ta				#folder that contains the trusted application
+│           ├── bitcoin_wallet_ta.c
+│           ├── bitcoin_wallet_ta.o
+│           ├── include
+│           │   └── bitcoin_wallet_ta.h
+│           ├── Makefile
+│           ├── sub.mk
+│           └── user_ta_header_defines.h
+├── client-lib				#folder that contains the TEE Client API
+│   ├── contiguousMalloc.c
+│   ├── include
+│   │   ├── cma_malloc.h
+│   │   ├── contiguousMalloc.h
+│   │   ├── load_ta.h
+│   │   ├── tee_client_api.h
+│   │   ├── tee_defines.h
+│   │   └── tee.h
+│   ├── load_ta.c
+│   ├── Makefile			# to generate the libteeodc.a
+│   └── tee_client_api.c
+├── hw					#folder that contains the hardware design
+│   ├── ip_repo
+│   │   ├── Arm_ipi_repository
+│   │   ├── Arm_sw_repository
+│   │   │   └── CortexM
+│   │   ├── BRAM_loader_1.0
+│   │   ├── security_monitor_1.0
+│   │   └── tee_communication_agent_1.0
+│   ├── project_teeod.tcl
+│   ├── src
+│   │   └── Ultra96_V2_constraints_190430.xdc
+│   └── vivado_project
+└── ta-api				#folder that contains the TEE Internal Core API
+    ├── arch
+    │   ├── cortex-m1
+    │   │   ├── core_cm1.h
+    │   │   └── linker.ld
+    │   ├── newlib.c
+    │   └── platform.h
+    ├── entry.S
+    ├── libutee
+    │   ├── include
+    │   │   ├── tee_api_defines.h
+    │   │   ├── tee_api.h
+    │   │   ├── tee_api_types.h
+    │   │   ├── tee_internal_api_extensions.h
+    │   │   ├── tee_internal_api.h
+    │   │   └── tee_ta_api.h
+    │   ├── tee_api.c
+    │   ├── tee_api_objects.c
+    │   └── tee_api_operations.c
+    ├── Makefile
+    ├── mk
+    │   └── ta_dev_kit.mk		# called by the trusted application to generate the TA binary
+    ├── tee.c
+    ├── tee_isr.h
+    ├── tee_isr.o
+    ├── tee_isr.S
+    └── tools
+        └── bintocoe.py
 
+    ```
 
 <!-- GETTING STARTED -->
 ## Getting Started
@@ -61,13 +137,14 @@ This section should list any major frameworks that you built your project using.
 This is an example of how you may give instructions on setting up your project locally.
 To get a local copy up and running follow these simple example steps.
 
-### Prerequisites
+<!--### Prerequisites
 
 This is an example of how to list things you need to use the software and how to install them.
 * npm
   ```sh
   npm install npm@latest -g
   ```
+-->
 
 ### Installation
 
@@ -92,7 +169,7 @@ This is an example of how to list things you need to use the software and how to
 
 Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
 
-_For more examples, please refer to the [Documentation](https://example.com)_
+_For more examples, please refer to the [Documentation](https://github.com/sergioagp/teeod/tree/master/Documentation)_
 
 
 
