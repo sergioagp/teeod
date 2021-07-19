@@ -6,8 +6,9 @@ __HEAP_SIZE  =      0x00000C00; /* TODO: heap need for kernel?! */
 /* */
 MEMORY
 {
-  FLASH (rx) 	 : ORIGIN = 0x00000000, LENGTH = 0x080000   /*  256k */
-  RAM (rwx)  	 : ORIGIN = 0x20000000, LENGTH = 0x001000   /* 4k */
+  FLASH (rx) 	 : ORIGIN = 0x00000000, LENGTH = 0x080000   		/*  256k */
+  INTERNAL_FLASH (rw) : ORIGIN = 0x10000000, LENGTH = 0x010000   	/*  1k */
+  RAM (rwx)  	 : ORIGIN = 0x20000000, LENGTH = 0x001000   		/* 4k */
 }
 
 ENTRY(_entry)
@@ -144,6 +145,18 @@ SECTIONS
 		*(.heap*)
 		__HeapLimit = .;
 	} > RAM
+
+
+	.secure_strg :
+	{
+		. = ALIGN(4);
+		__secure_strg_start__ = .;
+		*(.secure_strg*)
+		*(COMMON)
+		. = ALIGN(4);
+		__secure_strg_end__ = .;
+	} > INTERNAL_FLASH
+	
 
 	/* .stack_dummy section doesn't contains any symbols. It is only
 	 * used for linker to calculate size of stack sections, and assign

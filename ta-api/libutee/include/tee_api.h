@@ -73,6 +73,10 @@ TEE_Result TEE_GetObjectBufferAttribute(TEE_ObjectHandle object,
 
 /* Data and Key Storage API  - Persistent Object Functions */
 
+TEE_Result TEE_OpenPersistentObject(uint32_t storageID, const void *objectID,
+				    uint32_t objectIDLen, uint32_t flags,
+				    TEE_ObjectHandle *object);
+
 TEE_Result TEE_CreatePersistentObject(uint32_t storageID, const void *objectID,
 				      uint32_t objectIDLen, uint32_t flags,
 				      TEE_ObjectHandle attributes,
