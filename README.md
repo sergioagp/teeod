@@ -1,11 +1,11 @@
   <h1 align="center">TEEOD</h1>
   <p align="center">Trusted Execution Environments On-Demand via Reconfigurable FPGA
     <br />
-    <a href="https://github.com/othneildrew/Best-README-Template">View Demo</a>
+    <a href="https://youtu.be/ArsOXOTzKNM">View Demo</a>
     ·
-    <a href="https://github.com/othneildrew/Best-README-Template/issues">Report Bug</a>
+    <a href="https://github.com/sergioagp/teeod/issues">Report Bug</a>
     ·
-    <a href="https://github.com/othneildrew/Best-README-Template/issues">Request Feature</a>
+    <a href="https://github.com/sergioagp/teeod/issues">Request Feature</a>
   </p>
 </p>
 
@@ -47,28 +47,37 @@ Security is becoming paramount for IoT end-to-end solution designs. One well-est
 In this project, we introduce a novel TEE design aiming at disrupting the way TEEs are currently being built and deployed. We propose a newly refined TEE approach, named Trusted Execution Environments On-Demand (TEEOD), which leverages reconfigurable FPGA technology to provide additional security guarantees for security-critical applications. TEEOD approach implements secure enclaves in the programmable logic (PL) by instantiating a customized and dedicated security processor per application on a per-need basis.
 
 ### Built With
-
-This section should list any major frameworks that you built your project using. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
-* [Bootstrap](https://getbootstrap.com)
-* [JQuery](https://jquery.com)
-* [Laravel](https://laravel.com)
-
-
+* [Vivado 2020.1](https://www.xilinx.com/support/download.html)
+* [PetaLinux 2020.1](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-design-tools.html)
+* [Cortex-M1](https://developer.arm.com/ip-products/designstart/fpga)
 
 <!-- GETTING STARTED -->
 ## Getting Started
 
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
-
-### Prerequisites
+1. First open Vivado and select  `Tools -> Run Tcl Script...` and selecting the `<project_dir>/hw/project_teeod.tcl`
+2. Generate bitstream.
+3. Using the generated bitstream, build petalinux following this [Guide](https://www.96boards.org/documentation/consumer/ultra96/ultra96-v1/build/peta-linux.md.html).
+4. After succesfully build linux, it's time to generate the host and the TA applications. First, genereate the teeodc libray, by running the Makefile in client-api folder.
+5. Run the Makefile that is inside the folder apps/bitcoin-wallet you should obtain an bitcoin_wallet.elf (client application) and an TA.bin.
+6. Copy the wallet and the TA.bin to any folder in choose inside the petalinux running on the Ultra96v2
+7. Run the follow commands:
+  ```sh
+  ./wallet 1 1234                 #check if there is a master key run
+  ./wallet 2 1234                 #generate a new master key
+  ./wallet 3 1234 -a <mnemonic>   #generate a new master key from a mnemonic
+  ./wallet 4 1234                 #erase the generated master key
+  ./wallet 5 1234 -a <account_id> #sign a transaction
+  ./wallet 6 1234                 #get the bitcoin address
+  ```
+<!--### Prerequisites
 
 This is an example of how to list things you need to use the software and how to install them.
 * npm
   ```sh
   npm install npm@latest -g
   ```
-
+-->
+<!--
 ### Installation
 
 1. Get a free API Key at [https://example.com](https://example.com)
@@ -84,7 +93,7 @@ This is an example of how to list things you need to use the software and how to
    ```JS
    const API_KEY = 'ENTER YOUR API';
    ```
-
+-->
 
 
 <!-- USAGE EXAMPLES -->
@@ -92,14 +101,14 @@ This is an example of how to list things you need to use the software and how to
 
 Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
 
-_For more examples, please refer to the [Documentation](https://example.com)_
+_For more examples, please refer to the [Documentation](https://github.com/sergioagp/teeod/tree/master/Documentation)_
 
 
 
 <!-- ROADMAP -->
 ## Roadmap
 
-See the [open issues](https://github.com/othneildrew/Best-README-Template/issues) for a list of proposed features (and known issues).
+See the [open issues](https://github.com/sergioagp/teeod/issues) for a list of proposed features (and known issues).
 
 <!-- CONTACT -->
 ## Contact
